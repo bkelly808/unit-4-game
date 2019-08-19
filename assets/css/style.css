@@ -1,28 +1,28 @@
+.crystals{
+	display: flex;
+	justify-content: space-around;
+    align-items: center;
+}
+
+.crystal{
+	height:200px;
+	width: 200px;
+	border-radius: 4px;
+}
+
+img{
+	width:50px;
+}
 .wallpaper {
     background-size: 100%;
     background-image: url("../images/crystalsbackground.jpeg");
     text-align: center;
- }
+    }
 
-.col-lg-3 {
-    
-}
-#img1{
-    width:128px;height:128px
-}
-#img2 {
-    width:128px;height:128px
-}
-#img3 {
-    width:128px;height:128px
-}
-#img4 {
-    width:128px;height:128px
-}
-.col-lg-6-instructions {
-    text-align: center;
+.header {
+    font-family: 'Lexend Deca', sans-serif;
 }
 
-#randomNumber {
-    font-weight: bold;
+.p {
+    font-family: 'Lexend Deca', sans-serif;
 }

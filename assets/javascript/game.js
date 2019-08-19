@@ -1,107 +1,96 @@
+//The app should show the number of games the player wins and loses. To that end, do not refresh the page as a means to restart the game:
+
+var random_result;
+var lost = 0;
+var win = 0;
+var previous = 0;
+
+$(".crystal").attr('class');
+
+var resetAndStart = function () {
+
+$(".crystals").empty();
 //This is a game with 4 crystals - We need four crystals displayed as buttons on the page
-//The player will be shown a random number at the start of the game. When the game begins again, the player should see a new random number, which should be between 19 - 120.
-var compPick = Math.floor(Math.random() * 101) + 19; 
-		console.log("compPick: " + compPick); 
-		$("#randomNumber").html("Match this Number: " + compPick); 
+	var images = [
+			'assets/images/bluecrystals.jpeg', 
+			'assets/images/greencrystals.jpeg', 
+			'assets/images/pinkcrystals.jpeg', 
+			'assets/images/purplecrystals.jpeg'];
+    
+            //The player will be shown a random number at the start of the game. When the game begins again, the player should see a new random number, which should be between 19 - 120.
+    
+	random_result = Math.floor(Math.random() * 101 ) + 19; 
 
-//A new random number for each crystal should generate each time we win or lose. Each crystal has to have a random number between 1-12
-var one = Math.floor(Math.random() * 12) + 1; 
-		console.log("Crystal 1: " + one); 
-		$("#img1").html("<img src=" + "assets/images/bluecrystals.jpeg" + " value=" + one + ">"); 
 
-var two = Math.floor(Math.random() * 12) + 1; 
-		console.log("Crystal 2: " + two); 
-		$("#img2").html("<img src=" + "assets/images/greencrystals.jpeg" + " value=" + two + ">"); 
+	$("#result").html('Match this Number: ' + random_result);
 
-var three = Math.floor(Math.random() * 12) + 1; 
-		console.log("Crystal 3: " + three); 
-		$("#img3").html("<img src=" + "assets/images/pinkcrystals.jpeg" + " value=" + three + ">");
-	
-var four = Math.floor(Math.random() * 12) + 1; 
-		console.log("Crystal 4: " + four); 
-        $("#img4").html("<img src=" + "assets/images/purplecrystals.jpeg" + " value=" + four + ">");
+	for(var i = 0; i < 4; i++){
 
-        var wins = 0; 
-		console.log("wins: " + wins); 
+		var random = Math.floor(Math.random() * 11) + 1;
 
-	var losses = 0; 
-		console.log("losses: " + losses); 
+		var crystal = $("<div>");
+			crystal.attr({
+				"class": 'crystal',
+				"data-random": random
+			});
+			crystal.css({
+				"background-image":"url('" + images[i] + "')",
+				"background-size":"cover"
 
-	var score = 0; 
-		console.log("score: " + score); 
+			});
+
+
+		$(".crystals").append(crystal);
+
+	}
+
+	$("#previous").html("Total Score: " + previous);
+
+}
+
+
+resetAndStart();
+
+
 //When clicking any crystal, it should add to the previous number (it will add a specific amount of points to the player's total score)
 //Until it equals the random result
 //Your game will hide this amount until the player clicks a crystal
 //if the score is greater than the number, the losses increase
 //if it's equal, the wins counter goes up
-//The game restarts whenever the player wins or loses
-//The app should show the number of games the player wins and loses. To that end, do not refresh the page as a means to restart the game:
-function reset () {
-    compPick = Math.floor(Math.random() * 101) + 19; 
-        console.log("compPick: " + compPick); 
-    $("#randomNumber").html(compPick); 
+//The game restarts whenever the pl ayer wins or loses
 
-    score = 0; 
-    $(".scoreDisplay").html("Your Guess So Far: " + score); 
+$(document).on('click', ".crystal", function () {
 
-    one = Math.floor(Math.random() * 12) + 1;  
-        console.log("Gem 1: " + one); 
-    $("#img1").html("<img src=" + "assets/images/bluecrystals.jpeg" + " value=" + one + ">"); 
-    two = Math.floor(Math.random() * 12) + 1; 
-    console.log("Gem 2: " + two); 
-$("#img2").html("<img src=" + "assets/images/greencrystals.jpeg" + " value=" + two + ">"); 
+	var num = parseInt($(this).attr('data-random'));
 
-three = Math.floor(Math.random() * 12) + 1; 
-    console.log("Gem 3: " + three); 
-$("#img3").html("<img src=" + "assets/images/pinkcrystals.jpeg" + " value=" + three + ">");
-
-four = Math.floor(Math.random() * 12) + 1; 
-    console.log("Gem 4: " + four); 
-$("#img4").html("<img src=" + "assets/images/purplecrystals.jpeg" + " value=" + four + ">");
-
-$("img").on("click", function () {
-    var newScore = score += parseInt($(this).attr("value")); 
-        console.log("New Score: " + newScore); 
-    $(".scoreDisplay").html("Your total score is: " + newScore); 
-
-    if(newScore === compPick) { 
-        wins++ ; 
-        $(".wins").html("Wins: " + wins); 
-            console.log("Wins: " + wins); 
-            reset();     
-    } 
-
-    else if(newScore > compPick) {
-        losses++ ; 
-        $(".losses").html("Losses: " + losses); 
-            console.log("Losses: " + losses); 
-            reset(); 
-        
-    }
-
-}); 
+	previous += num;
 
 
+	$("#previous").html("Total score: " + previous);
 
-}
+	console.log(previous);
 
-$("img").on("click", function () {
-var newScore = score += parseInt($(this).attr("value")); 
-    console.log("New Score: " + newScore); 
-$(".scoreDisplay").html(newScore); 
+	if(previous > random_result){
 
-if(newScore === compPick) { 
-    wins++ ; 
-    $(".wins").html("Wins: " + wins); 
-        console.log("Wins: " + wins); 
-        reset(); 
-} 
+		lost++;
 
-else if(newScore > compPick) {
-    losses++ ; 
-    $(".losses").html("Losses: " + losses); 
-        console.log("Losses: " + losses); 
-        reset(); 
-}
+		$("#lost").html("You lost: " + lost);
+
+		previous = 0;
+
+		resetAndStart();
+
+	} 
+	else if(previous === random_result){
+
+		win++;
+
+		$("#win").html("You win: " + win);
+
+		previous = 0;
+
+		resetAndStart();
+
+	}
 
 });
